@@ -21,13 +21,13 @@ class TransactionsRepository extends Repository<Transaction> {
 
     const sumIncome = incomes
       .map(transaction => {
-        return transaction.value;
+        return Number(transaction.value);
       })
       .reduce((acc, curr) => acc + curr, 0);
 
     const sumOutcome = outcomes
       .map(transaction => {
-        return transaction.value;
+        return Number(transaction.value);
       })
       .reduce((acc, curr) => acc + curr, 0);
 

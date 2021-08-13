@@ -7,17 +7,17 @@ import TransactionsRepository from '../repositories/TransactionsRepository';
 
 interface Request {
   title: string;
-  type: 'income' | 'outcome';
   value: number;
-  category_id: string;
+  type: 'income' | 'outcome';
+  category: string;
 }
 
 class CreateTransactionService {
   public async execute({
     title,
-    type,
     value,
-    category_id,
+    type,
+    category,
   }: Request): Promise<Transaction> {
     const transactionsRepository = getCustomRepository(TransactionsRepository);
 
@@ -25,7 +25,6 @@ class CreateTransactionService {
       title,
       value,
       type,
-      category_id,
     });
 
     await transactionsRepository.save(transaction);

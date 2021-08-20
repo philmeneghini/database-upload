@@ -1,11 +1,10 @@
 // import AppError from '../errors/AppError';
 
-import { check } from 'prettier';
 import { getCustomRepository } from 'typeorm';
 import AppError from '../errors/AppError';
-import Category from '../models/Category';
 import Transaction from '../models/Transaction';
 import TransactionsRepository from '../repositories/TransactionsRepository';
+import ManageCategoryService from './ManageCategoryService';
 
 interface Request {
   title: string;
@@ -31,10 +30,15 @@ class CreateTransactionService {
       }
     }
 
+    const manageCategory = new ManageCategoryService();
+
+    const managedCategory = await manageCategory.execute({ category });
+
     const transaction = transactionsRepository.create({
       title,
       value,
       type,
+      category: managedCategory,
     });
 
     await transactionsRepository.save(transaction);
